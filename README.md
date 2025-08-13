@@ -1,6 +1,7 @@
 # Autonomous React Native Mobile App
 
 Auth Flow Automation: https://asset.cloudinary.com/dtfz3rnjx/0229b5c8992f98374223991498ad7ff0
+
 Dashboard Flow Automation: https://asset.cloudinary.com/dtfz3rnjx/5157f33ff53a945db21103e4c04afcb3
 
 A React Native mobile application for autonomous app management with authentication, dashboard, and subscription features.
