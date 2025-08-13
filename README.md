@@ -206,6 +206,17 @@ autonomous-react-native-mobile-app/
 3. **Testing**: Run `npm test` and `npm run lint`
 4. **Building**: See [Building for Production](#building-for-production) section
 
+### Firebase Functionality Note
+
+**Important**: Firebase functionality has been commented out due to Detox testing compatibility. If you want to test Firebase features:
+
+1. Open `src/navigation/MainNavigator.tsx`
+2. Find the line: `// initializeFirebaseMessaging();`
+3. Uncomment it by removing the `//` at the beginning
+4. Restart your app to enable Firebase messaging
+
+**Note**: Firebase features may interfere with Detox E2E testing, so keep this commented out when running Detox tests.
+
 ## Building for Production
 
 This section covers how to build your React Native app for production deployment on both Android and iOS platforms.
