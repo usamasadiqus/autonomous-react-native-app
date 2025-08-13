@@ -1,12 +1,192 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Autonomous React Native Mobile App
 
-# Getting Started
+A React Native mobile application for autonomous app management with authentication, dashboard, and subscription features.
 
-> **Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+## Table of Contents
 
-## Scripts
+- [Prerequisites](#prerequisites)
+- [Quick Start with Docker](#quick-start-with-docker)
+- [Manual Setup](#manual-setup)
+- [Project Structure](#project-structure)
+- [Development Workflow](#development-workflow)
+- [Building for Production](#building-for-production)
+- [Troubleshooting](#troubleshooting)
 
-The following npm scripts are available in this project:
+## Prerequisites
+
+Before setting up this project, ensure you have the following installed:
+
+### For All Platforms
+
+- **Node.js** (v18 or higher)
+- **npm** or **yarn**
+- **Git**
+
+### For Android Development
+
+- **Android Studio** (latest version)
+- **Android SDK** (API level 33 or higher)
+- **Java Development Kit (JDK)** 11 or higher
+- **Android Emulator** or physical device
+
+### For iOS Development (macOS only)
+
+- **Xcode** (latest version)
+- **Xcode Command Line Tools**
+- **iOS Simulator** or physical device
+- **CocoaPods**
+
+### For Docker (Optional)
+
+- **Docker Desktop** (latest version)
+- **Docker Compose**
+
+## Quick Start with Docker
+
+The easiest way to get started is using Docker, which handles all dependencies automatically.
+
+### 1. Clone the Repository
+
+```bash
+git clone <your-repository-url>
+cd autonomous-react-native-mobile-app
+```
+
+### 2. Start with Docker Compose
+
+```bash
+# Start all services (Metro bundler and JSON server)
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop services
+docker-compose down
+```
+
+### 3. Run on Device/Emulator
+
+```bash
+# For Android
+npm run android
+
+# For iOS
+npm run ios
+```
+
+## Manual Setup
+
+If you prefer to set up the project manually or Docker is not available:
+
+### 1. Clone and Install Dependencies
+
+```bash
+git clone <your-repository-url>
+cd autonomous-react-native-mobile-app
+
+# Install Node.js dependencies
+npm install
+
+# Install iOS dependencies (macOS only)
+cd ios && pod install && cd ..
+```
+
+### 2. Configure API Settings
+
+Update the `baseUrl` in `src/utils/constants.ts`:
+
+```ts
+// For emulator/simulator (default)
+export const baseUrl = 'http://localhost:3001';
+
+// For real device (replace with your computer's IP)
+// export const baseUrl = 'http://192.168.1.100:3001';
+```
+
+### 3. Start Development Services
+
+Open multiple terminal windows/tabs:
+
+**Terminal 1: Start Metro Bundler**
+
+```bash
+npm start
+```
+
+**Terminal 2: Start JSON Server (Mock API)**
+
+```bash
+npm run json-server
+```
+
+**Terminal 3: Run on Device/Emulator**
+
+```bash
+# For Android
+npm run android
+
+# For iOS
+npm run ios
+```
+
+### 4. Verify Setup
+
+Test if your services are running correctly:
+
+```bash
+# Check Metro bundler
+curl http://localhost:8081/status
+
+# Check JSON server
+curl http://localhost:3001/apps
+```
+
+**Expected Results:**
+
+- Metro bundler should show React Native status
+- JSON server should return JSON data from db.json
+- Both ports should be active and listening
+
+## Project Structure
+
+```
+autonomous-react-native-mobile-app/
+├── src/
+│   ├── components/          # Reusable UI components
+│   │   ├── app-management/  # App management components
+│   │   ├── common/          # Common UI elements
+│   │   ├── dashboard/       # Dashboard components
+│   │   └── subscription/    # Subscription components
+│   ├── screens/            # App screens
+│   │   ├── auth/           # Authentication screens
+│   │   ├── dashboard/      # Main dashboard
+│   │   ├── app-management/ # App creation/editing
+│   │   └── subscription/   # Subscription management
+│   ├── navigation/         # Navigation configuration
+│   ├── store/              # Redux store and slices
+│   ├── services/           # API services
+│   ├── hooks/              # Custom React hooks
+│   ├── utils/              # Utility functions
+│   └── config/             # App configuration
+├── android/                # Android-specific files
+├── ios/                    # iOS-specific files
+├── __tests__/              # Test files
+├── e2e/                    # End-to-end tests
+├── assets/                 # Images, fonts, etc.
+├── db.json                 # Mock API data
+└── package.json            # Dependencies and scripts
+```
+
+**Key Files:**
+
+- `src/utils/constants.ts` - API configuration and app constants
+- `db.json` - Mock data for development
+- `package.json` - Project dependencies and scripts
+
+## Development Workflow
+
+### Available Scripts
 
 | Script      | Description                                                      |
 | ----------- | ---------------------------------------------------------------- |
@@ -19,124 +199,14 @@ The following npm scripts are available in this project:
 | clean       | Clean the Android build (runs './gradlew clean' in android/).    |
 | ios-install | Install iOS CocoaPods dependencies (runs 'pod install' in ios/). |
 
-You can run any script using:
+### Development Process
 
-```bash
-npm run <script-name>
-```
+1. **Start Environment**: Use Docker (`docker-compose up -d`) or manual setup
+2. **Make Changes**: Edit files in the `src/` directory
+3. **Testing**: Run `npm test` and `npm run lint`
+4. **Building**: See [Building for Production](#building-for-production) section
 
-### Running Metro and JSON Server Together
-
-To run the app with both the Metro bundler and the mock API server (json-server), open two separate terminal windows/tabs:
-
-**Terminal 1: Start Metro Bundler**
-
-```bash
-npm run start
-```
-
-**Terminal 2: Start JSON Server**
-
-```bash
-npm run json-server
-```
-
-This will ensure your React Native app can access the mock API at `http://localhost:3001` while developing.
-
-## Setting the API Base URL
-
-To connect your app to the mock API server, you need to set the correct `baseUrl` in the `src/utils/constants.ts` file.
-
-### If running on an **emulator or simulator** (Android Emulator or iOS Simulator):
-
-Use:
-
-```ts
-export const baseUrl = 'http://localhost:3001';
-```
-
-This works for both Android emulator and iOS simulator in most setups.
-
-### If running on a **real device** (connected to the same network as your computer):
-
-1. Find your computer's local IP address (e.g., `192.168.1.100`).
-2. Use:
-
-```ts
-export const baseUrl = 'http://<your-computer-ip>:3001';
-```
-
-Replace `<your-computer-ip>` with your actual IP address.
-
-#### Example for real device:
-
-```ts
-export const baseUrl = 'http://192.168.1.100:3001';
-```
-
-Make sure your device and computer are on the same Wi-Fi network, and your firewall allows incoming connections to port 3001.
-
-## Step 1: Start the Metro Server
-
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
-
-To start Metro, run the following command from the _root_ of your React Native project:
-
-```bash
-# using npm
-npm start
-
-# OR using Yarn
-yarn start
-```
-
-## Step 2: Start your Application
-
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
-
-### For Android
-
-```bash
-# using npm
-npm run android
-
-# OR using Yarn
-yarn android
-```
-
-### For iOS
-
-```bash
-# using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
-
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
-
-## Step 3: Modifying your App
-
-Now that you have successfully run the app, let's modify it.
-
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
-
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Building for Production
+## Building for Production
 
 This section covers how to build your React Native app for production deployment on both Android and iOS platforms.
 
@@ -310,15 +380,58 @@ npm run ios
 - **TestFlight**: Upload to App Store Connect for beta testing
 - **Ad Hoc**: Distribute to specific devices for testing
 
-## Troubleshooting Build Issues
+## Troubleshooting
 
-### Common Android Build Issues
+### Common Setup Problems
+
+**Metro Bundler Issues:**
+
+```bash
+# Clear Metro cache
+npx react-native start --reset-cache
+
+# Clear npm cache
+npm cache clean --force
+```
+
+**Android Build Issues:**
+
+```bash
+# Clean Android build
+cd android && ./gradlew clean && cd ..
+
+# Check Android SDK location
+echo $ANDROID_HOME
+```
+
+**iOS Build Issues:**
+
+```bash
+# Reinstall pods
+cd ios && pod deintegrate && pod install && cd ..
+
+# Clear Xcode build folder
+rm -rf ios/build/
+```
+
+**Docker Issues:**
+
+```bash
+# Rebuild Docker containers
+docker-compose down
+docker-compose build --no-cache
+docker-compose up -d
+```
+
+### Common Build Issues
+
+**Android Build Issues:**
 
 - **Gradle sync failed**: Check internet connection and Gradle version
 - **SDK location not found**: Set ANDROID_HOME environment variable
 - **Keystore issues**: Verify keystore path and passwords
 
-### Common iOS Build Issues
+**iOS Build Issues:**
 
 - **Pod install failed**: Run `pod repo update` and try again
 - **Signing issues**: Check provisioning profiles and certificates
@@ -339,16 +452,8 @@ pod deintegrate
 pod install
 ```
 
-# Troubleshooting
+### Getting Help
 
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+- Check the [React Native Troubleshooting Guide](https://reactnative.dev/docs/troubleshooting)
+- Review the project's issue tracker
+- Ensure all prerequisites are properly installed

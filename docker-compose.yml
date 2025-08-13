@@ -1,0 +1,41 @@
+version: '3.8'
+
+services:
+  # Metro Bundler Service
+  metro:
+    image: node:18-alpine
+    container_name: autonomous-mobile-metro
+    working_dir: /app
+    volumes:
+      - .:/app
+      - /app/node_modules
+    ports:
+      - '8081:8081'
+    environment:
+      - NODE_ENV=development
+    command: >
+      sh -c "npm install &&
+              npx react-native start --host 0.0.0.0 --port 8081"
+    networks:
+      - autonomous-mobile
+
+  # JSON Server (Mock API)
+  json-server:
+    image: node:18-alpine
+    container_name: autonomous-mobile-api
+    working_dir: /app
+    volumes:
+      - .:/app
+    ports:
+      - '3001:3001'
+    environment:
+      - NODE_ENV=development
+    command: >
+      sh -c "npm install &&
+              npx json-server --watch db.json --host 0.0.0.0 --port 3001"
+    networks:
+      - autonomous-mobile
+
+networks:
+  autonomous-mobile:
+    driver: bridge

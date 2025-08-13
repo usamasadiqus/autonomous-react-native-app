@@ -1,33 +1,28 @@
-# Use Node.js 20.18.0 as the base image
-FROM node:20.18.0
+# Multi-stage Dockerfile for React Native development
+FROM node:18-alpine AS base
+
+# Install system dependencies
+RUN apk add --no-cache \
+    git \
+    python3 \
+    make \
+    g++ \
+    bash
 
 # Set working directory
 WORKDIR /app
 
-# Install system dependencies
-RUN apt-get update && apt-get install -y \
-    git \
-    curl \
-    wget \
-    unzip \
-    libglu1-mesa \
-    openjdk-11-jdk \
-    && rm -rf /var/lib/apt/lists/*
-
-# Install React Native CLI globally
-RUN npm install -g react-native-cli
-
 # Copy package files
 COPY package*.json ./
 
-# Install project dependencies
-RUN npm install
+# Install dependencies
+RUN npm ci --only=production && npm cache clean --force
 
-# Copy the rest of the project
+# Copy source code
 COPY . .
 
-# Expose port for Metro bundler
-EXPOSE 8081
+# Expose ports
+EXPOSE 8081 3001
 
-# Start Metro bundler
+# Default command
 CMD ["npm", "start"]
