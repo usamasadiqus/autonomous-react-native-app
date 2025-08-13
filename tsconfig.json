@@ -1,0 +1,26 @@
+{
+  "extends": "@react-native/typescript-config/tsconfig.json",
+  "compilerOptions": {
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    "jsx": "react-native",
+    "typeRoots": ["src/types", "node_modules/@types"],
+    "lib": [
+      "esnext",
+      "dom"
+    ]
+  },
+  "include": [
+    "src",
+    "src/types",
+    "src/redux/store.ts",
+    "global.d.ts",
+    "src/types/declaration.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "babel.config.js",
+    "metro.config.js",
+    "jest.config.js"
+  ]
+}

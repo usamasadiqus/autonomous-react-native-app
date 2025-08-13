@@ -1,0 +1,88 @@
+{
+  "users": [
+    {
+      "id": "72e2",
+      "name": "Usama",
+      "email": "usama@gmail.com",
+      "password": "Test@123",
+      "token": "jwt_token_72e2_1755063533374",
+      "createdAt": "2025-07-12T14:29:13.093Z",
+      "isBiometricEnabled": true
+    }
+  ],
+  "apps": [],
+  "subscriptions": [],
+  "plans": [
+    {
+      "id": "1",
+      "name": "Basic",
+      "price": 9.99,
+      "currency": "USD",
+      "interval": "monthly",
+      "description": "Perfect for getting started",
+      "features": [
+        "Up to 5 apps",
+        "Basic analytics",
+        "Email support",
+        "2GB storage"
+      ],
+      "limitations": {
+        "maxApps": "5",
+        "storage": "2GB",
+        "support": "Email only"
+      },
+      "popular": false,
+      "stripePriceId": "price_basic_monthly",
+      "isActive": true
+    },
+    {
+      "id": "2",
+      "name": "Pro",
+      "price": 19.99,
+      "currency": "USD",
+      "interval": "monthly",
+      "description": "For growing businesses",
+      "features": [
+        "Unlimited apps",
+        "Advanced analytics",
+        "Priority support",
+        "Custom branding",
+        "10GB storage",
+        "API access"
+      ],
+      "limitations": {
+        "maxApps": "Unlimited",
+        "storage": "10GB",
+        "support": "Priority"
+      },
+      "popular": true,
+      "stripePriceId": "price_premium_monthly",
+      "isActive": true
+    },
+    {
+      "id": "3",
+      "name": "Enterprise",
+      "price": 49.99,
+      "currency": "USD",
+      "interval": "monthly",
+      "description": "For large organizations",
+      "features": [
+        "Unlimited apps",
+        "Enterprise analytics",
+        "24/7 phone support",
+        "White-label solution",
+        "Unlimited storage",
+        "Advanced API access"
+      ],
+      "limitations": {
+        "maxApps": "Unlimited",
+        "storage": "Unlimited",
+        "support": "24/7 phone"
+      },
+      "popular": false,
+      "stripePriceId": "price_enterprise_monthly",
+      "isActive": true
+    }
+  ],
+  "payments": []
+}
